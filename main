@@ -1,0 +1,82 @@
+import requests
+import bs4
+import csv
+import os
+
+# --  Enter your battlemetrics page link into the url variable below this line
+# -- EXAMPLE: https://www.battlemetrics.com/players/#########
+
+url = ''
+
+# -- Enter the path of the csv file with the list of your preferred servers
+
+server_file = open('INSERT PATH HERE' , 'r')
+file_reader = csv.reader(server_file)
+server_list = list(file_reader)
+
+site = requests.get(url)
+soup = bs4.BeautifulSoup(site.text, 'html.parser')
+
+player_name = soup.find('h3').text
+game_table = soup.find_all('div' , {'class':'css-5ens21'})
+
+
+class Game():
+    def __init__(self, table_entry):
+        battlemetrics = r'https://www.battlemetrics.com'
+        game_info = table_entry.find_all('a')
+        game_info1 = game_info[1]
+        game_info2 = game_info1.get('href').split('/')
+        
+        del game_info2[0]
+        del game_info2[0]
+        
+        self.game = game_info2[0]
+        self.server = game_info1.text
+        self.server_id = game_info2[1]
+        self.last_seen = table_entry.find('small').text.title()
+        self.link = f'{battlemetrics}/servers/{self.game}/{self.server_id}'
+        
+    def info(self):
+        print(self.game.title())
+        print(self.server)
+        print(self.server_id)
+        print(self.last_seen)
+        print(self.link)
+        print('\n')
+
+    def decay(self):
+        print(self.server)
+        print(self.last_seen)
+        print('\n')
+        
+        
+
+def decay(game_name=''):
+
+    if game_name == '':
+        game_name = 'ark'
+    
+    os.system('cls')
+    
+    print(f'Last Seen Times For {player_name}\n\n')
+    
+    for game in game_table:
+        game_class = Game(game)
+
+        if game_class.game == game_name:
+            for k , v in server_list:
+                if game_class.server_id.strip() == v.strip():
+                    game_class.server = k.title()
+                    if game_class.server != 'Bossland':
+                        game_class.decay()
+                        
+
+    while True:
+        endcheck = input('Hit Enter To Close This Window!')
+        if len(endcheck) >= 0:
+            quit()
+
+
+if __name__ == '__main__':
+    decay()
