@@ -52,7 +52,7 @@ class Game():
         
         
 
-def decay(game_name=''):
+def main(game_name=''):
 
     if game_name == '':
         game_name = 'ark'
@@ -79,4 +79,4 @@ def decay(game_name=''):
 
 
 if __name__ == '__main__':
-    decay()
+    main()
