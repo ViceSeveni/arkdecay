@@ -3,7 +3,7 @@ import bs4
 import csv
 import os
 
-# --  Enter your battlemetrics page link into the url variable below this line
+# --  Enter your battlemetrics page link into the url variable below
 # -- EXAMPLE: https://www.battlemetrics.com/players/#########
 
 url = ''
