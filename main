@@ -8,7 +8,8 @@ import os
 
 url = ''
 
-# -- Enter the path of the csv file with the list of your preferred servers into the server_file variable below
+# -- Enter the path of the csv file with the list of your preferred servers into
+# -- the server_file variable below
 
 server_file = open('INSERT PATH HERE' , 'r')
 file_reader = csv.reader(server_file)
